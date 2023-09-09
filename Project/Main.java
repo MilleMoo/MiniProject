@@ -4,6 +4,7 @@ import Project.File.*;
 
 class Main {
     public static void main(String[] args) {
-        MainManu s1 = new MainManu();
+        POS p1 = new POS();
+        p1.MainManu1();
     }
 }
