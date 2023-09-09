@@ -165,14 +165,16 @@ public abstract class MainManu {
 
     public void ShowValueInArrayList() {//แสดงค่าทั้งหมดในArraylist
         System.out.println("Clothes in your the List: ");
-        CheckBill();
+        this.Money = 0;
         for (int i = 0; i < Stock.size(); i++) {
             Clothes item = Stock.get(i);
-            System.out.println("Clothes: " + count + " Price: " + item.getOverAllCharges() + " Bath");
+            CheckBill(i);
+            System.out.println("Clothes: " + (i+1) + " Price: " + item.getOverAllCharges() + " Bath");
             System.out.println("Style: " + ShowStyle(item.getStyle()));
             System.out.println("Size: " + item.getSize() + " Price: " + item.getSizeCharges() + " Bath");
             System.out.println("Color: " + item.getColor());
-            System.out.println("Fabric: " + ShowFabric(item.getFabric()) + " Price: " + item.getFabricCharges()+ " Bath" + "\n");
+            System.out.println("Fabric: " + ShowFabric(item.getFabric()) + " Price: " + item.getFabricCharges() + " Bath" + "\n");
+            this.Money = this.Money + item.getFabricCharges() + item.getSizeCharges();
         }
         System.out.println("total price : "+this.Money);
     }
@@ -298,11 +300,10 @@ public abstract class MainManu {
         }
     }
     
-    private void CheckBill() {
-        for (int i = 0; i < Stock.size(); i++) {
+    private void CheckBill(int index) {
             this.FabricCharges = 0;
             this.SizeCharges = 0;
-            Clothes Item = Stock.get(i);
+            Clothes Item = Stock.get(index);
             switch (Item.getSize()) {
                 case "S":
                     this.SizeCharges += 50;
@@ -331,7 +332,5 @@ public abstract class MainManu {
             Item.setFabricCharges(this.FabricCharges);
             Item.setSizeCharges(this.SizeCharges);
             Item.setOverAllCharges(this.FabricCharges + this.SizeCharges);
-            this.Money = this.Money + this.FabricCharges + this.SizeCharges;
         }
     }
-}
