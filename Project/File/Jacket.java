@@ -5,6 +5,9 @@ public class Jacket implements Clothes{
     private String Color;
     private int Fabric;
     private int Style;
+    private int FabricCharges;
+    private int SizeCharges;
+    private int OverAllCharges;
 
     public Jacket(int Style, String Size, String Color, int Fabric) {
         setColor(Color);
@@ -51,5 +54,35 @@ public class Jacket implements Clothes{
     @Override
     public int getStyle() {
         return this.Style;
+    }
+
+    @Override
+    public void setFabricCharges(int FabricCharges) {
+        this.FabricCharges = FabricCharges;
+    }
+
+    @Override
+    public void setSizeCharges(int SizeCharges) {
+        this.SizeCharges = SizeCharges;
+    }
+
+    @Override
+    public int getFabricCharges() {
+        return this.FabricCharges;
+    }
+
+    @Override
+    public int getSizeCharges() {
+        return this.SizeCharges;
+    }
+
+    @Override
+    public void setOverAllCharges(int OverAllCharges) {
+        this.OverAllCharges = OverAllCharges;
+    }
+
+    @Override
+    public int getOverAllCharges() {
+        return OverAllCharges;
     }
 }
