@@ -300,7 +300,7 @@ public abstract class MainManu {
         }
     }
     
-    private void CheckBill(int index) {
+    private void CheckBill(int index) {//ร่วมยอดทั้งหมด
             this.FabricCharges = 0;
             this.SizeCharges = 0;
             Clothes Item = Stock.get(index);
