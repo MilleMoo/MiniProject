@@ -558,9 +558,9 @@ public class POSGUI extends JFrame {
                 || size.contains("XL")) {
             return newSize;
         } else {
-            newSize = JOptionPane.showInputDialog("Wrong Size please input agin:");
-            if (newSize != null) {
-                CheckWrongSize(newSize);
+            String NewSize = JOptionPane.showInputDialog("Wrong Size please input agin:");
+            if (NewSize != null) {
+                CheckWrongSize(NewSize);
             }
             return newSize;
         }
@@ -572,9 +572,9 @@ public class POSGUI extends JFrame {
                 || fabric.contains("NYLON")) {
             return newFabric;
         } else {
-            newFabric = JOptionPane.showInputDialog("Wrong Fabic please input agin:");
-            if (newFabric != null) {
-                CheckWrongFabic(newFabric);
+            String NewFabric = JOptionPane.showInputDialog("Wrong Fabic please input agin:");
+            if (NewFabric != null) {
+                CheckWrongFabic(NewFabric);
             }
             return newFabric;
         }
@@ -586,9 +586,9 @@ public class POSGUI extends JFrame {
                 || style.contains("JACKET")) {
             return newStyle;
         } else {
-            newStyle = JOptionPane.showInputDialog("Wrong Style please input agin:");
-            if (newStyle != null) {
-                CheckWrongStyle(newStyle);
+            String NewStyle = JOptionPane.showInputDialog("Wrong Style please input agin:");
+            if (NewStyle != null) {
+                CheckWrongStyle(NewStyle);
             }
             return newStyle;
         }
