@@ -1,10 +1,18 @@
 package Project;
 
+
+import javax.swing.SwingUtilities;
+
 import Project.File.*;
 
 class Main {
     public static void main(String[] args) {
-        POS p1 = new POS();
-        p1.MainManu1();
+        
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new POSGUI();
+            }
+        });
     }
 }
