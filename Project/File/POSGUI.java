@@ -267,9 +267,9 @@ public class POSGUI extends JFrame {
                                 JScrollPane scrollPane = new JScrollPane(billTextArea);
                                 dialog.add(scrollPane);
                                 String promotion = "Not have Promotion";
-                                String billMessage = "----------------------Bill------------------------------\n              "
-                                        + formattedTime +
-                                        "\n                        OnlyCloths" +
+                                String billMessage = "----------------------Bill------------------------------\n"+"                        OnlyCloths              \n" + 
+                                        "              "+ formattedTime+
+                                        
                                         "\n--------------------------------------------------------\n\n";
                                 if (getPromotion()) {
                                     promotion = "Discount 10 %";
