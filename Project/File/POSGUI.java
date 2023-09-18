@@ -20,8 +20,8 @@ public class POSGUI extends JFrame {
     private JTextField nameTextField;
     private JLabel nameLabel;
     private JTextField receivePaymentTextField;
+    private boolean Promotion = false;
     private ArrayList<Clothes> Stock = new ArrayList<>();
-    private int count = -1;
 
     public POSGUI() {
         setTitle("POS");
@@ -61,17 +61,13 @@ public class POSGUI extends JFrame {
 
                 if (selectedStyle.equals("TShirt")) {
                     newItem = new TShirt(1, selectedSize, "", 1);
-                    count++;
                 } else if (selectedStyle.equals("Polo")) {
                     newItem = new Polo(2, selectedSize, "", 1);
-                    count++;
                 } else if (selectedStyle.equals("Jacket")) {
                     newItem = new Jacket(3, selectedSize, "", 1);
-                    count++;
                 }
 
                 if (newItem != null) {
-                    // Calculate size and fabric charges
                     int sizeCharges = 0;
                     int fabricCharges = 0;
 
@@ -102,14 +98,15 @@ public class POSGUI extends JFrame {
                             break;
                     }
 
-                    // Set charges for the item
                     newItem.setSizeCharges(sizeCharges);
                     newItem.setFabricCharges(fabricCharges);
                     newItem.setOverAllCharges(sizeCharges + fabricCharges);
 
                     Stock.add(newItem);
-
-                    ShowNewClothes(selectedFabric, selectedSize, selectedStyle, newItem);
+                    billTextArea.setText("");
+                    for (int i = 0; i < Stock.size(); i++) {
+                        billTextArea.append(ShowAllClothes(i));
+                    }
                 }
             }
         });
@@ -131,22 +128,25 @@ public class POSGUI extends JFrame {
                                 int start = -1, end = -1;
                                 String billText = billTextArea.getText();
                                 for (int i = 0; i <= selectedIndex; i++) {
-                                    start = billText.indexOf("Clothes:", start + 1);
-                                    end = billText.indexOf("Bath", end + 1);
+                                    start = billText.indexOf("Clothes:", start - 1);
+                                    end = billText.indexOf("Bath", end - 1);
                                     if (start == -1 || end == -1) {
                                         break;
                                     }
                                 }
                                 if (start != -1 && end != -1) {
-                                    int nextStart = billText.indexOf("Clothes:", end + 1);
+                                    int nextStart = billText.indexOf("Clothes:", end - 1);
                                     if (nextStart == -1) {
                                         billTextArea.replaceRange("", start, billText.length());
                                     } else {
                                         billTextArea.replaceRange("", start, nextStart);
                                     }
                                 }
+                                billTextArea.setText("");
+                                for (int i = 0; i < Stock.size(); i++) {
+                                    billTextArea.append(ShowAllClothes(i));
+                                }
                                 JOptionPane.showMessageDialog(null, "Removed item:\n" + removedItem.toString());
-                                count--;
                             } else {
                                 JOptionPane.showMessageDialog(null, "Invalid index. Please enter a valid index.");
                             }
@@ -208,20 +208,24 @@ public class POSGUI extends JFrame {
                                             setFabricStringToInt(newFabric, selectedItem);
                                             setStyleStringToInt(newStyle, selectedItem);
                                             CheckBill(selectedIndex);
-
-                                            // Update the display
-                                            ShowNewClothes(ShowFabric(selectedItem.getFabric()), newSize,
-                                                    ShowStyle(selectedItem.getStyle()), selectedItem);
+                                            billTextArea.setText("");
+                                            for (int i = 0; i < Stock.size(); i++) {
+                                                ShowAllClothes(i);
+                                            }
                                         }
                                     }
                                 }
                             } else {
                                 JOptionPane.showMessageDialog(null,
-                                "Invalid index. Please enter a valid index.");
+                                        "Invalid index. Please enter a valid index.");
                             }
-                            } catch (NumberFormatException ex) {
+                        } catch (NumberFormatException ex) {
                             JOptionPane.showMessageDialog(null,
                                     "Invalid input. Please enter Not have in cart.");
+                        }
+                        billTextArea.setText("");
+                        for (int i = 0; i < Stock.size(); i++) {
+                            billTextArea.append(ShowAllClothes(i));
                         }
                     }
                 }
@@ -231,11 +235,10 @@ public class POSGUI extends JFrame {
         clearBillButton = new JButton("Clear Clothes in Cart");
         clearBillButton.addActionListener(new ActionListener() {
 
-    @Override
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Stock.clear();
                 billTextArea.setText("");
-                count = -1;
             }
         });
 
@@ -246,36 +249,53 @@ public class POSGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (Stock.size() != 0) {
                     String staffName = nameTextField.getText();
-                    String receivedPaymentText = receivePaymentTextField.getText(); // รับค่าจากช่องรับเงิน
+                    String receivedPaymentText = receivePaymentTextField.getText();
+                    LocalDateTime currentTime = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                    String formattedTime = currentTime.format(formatter);
                     if (!staffName.isEmpty() && !receivedPaymentText.isEmpty()) {
                         try {
                             double totalBill = calculateTotalBill();
                             double receivedPayment = Double.parseDouble(receivedPaymentText);
                             if (totalBill <= receivedPayment) {
-                                // เก็บค่าเวลาปัจจุบัน
-                                LocalDateTime currentTime = LocalDateTime.now();
-                                DateTimeFormatter formatter = DateTimeFormatter
-                                        .ofPattern("yyyy - MM - dd HH : mm : ss");
-                                String formattedTime = currentTime.format(formatter);
-                                String billMessage = "\n\n----------------------Bill----------------------------\n"
-                                        + "Date - Time : " + formattedTime
-                                        + "\n------------------------------------------------------\n\n";
+                                JDialog dialog = new JDialog();
+                                dialog.setTitle("Bill");
+                                dialog.setModal(true);
+                                dialog.setSize(260, 1000);
+                                JTextArea billTextArea = new JTextArea();
+                                billTextArea.setEditable(false);
+                                billTextArea.setWrapStyleWord(true);
+                                billTextArea.setLineWrap(true);
 
-                                for (int i = 0; i < Stock.size(); i++) {
-                                    Clothes item = Stock.get(i);
-                                    String itemInfo = ShowAllClothes(i) + "Price: " + item.getOverAllCharges()
-                                            + " Bath\n\n";
-                                    billMessage += itemInfo;
+                                JScrollPane scrollPane = new JScrollPane(billTextArea);
+                                dialog.add(scrollPane);
+                                String promotion = "Not have Promotion";
+                                String billMessage = "----------------------Bill------------------------------\n              "
+                                        + formattedTime +
+                                        "\n                        OnlyCloths" +
+                                        "\n--------------------------------------------------------\n\n";
+                                if (getPromotion()) {
+                                    promotion = "Discount 10 %";
                                 }
 
-                                billMessage += "Total Amount: " + totalBill + " Bath\n" + "Cash: "
-                                        + receivedPayment + " Bath\n" +
-                                        "Change: " + calculateChangeMoney(receivedPayment, totalBill) + " Bath"
-                                        + "\n\nStaff Name : " + staffName
+                                for (int i = 0; i < Stock.size(); i++) {
+                                    String itemInfo = ShowAllClothes(i) + "\n\n";
+                                    billMessage += itemInfo;
+                                }
+                                billMessage += "Total : " + totalBill + " Bath\n"
+                                        + "Promotion: " + promotion
+                                        + "\nDiscount: " + calculatePromotion(totalBill) +
+                                        "\nTotal Amount: " + (totalBill - calculatePromotion(totalBill)) + " Bath\n"
+                                        + "Cash: " + receivedPayment + " Bath"
+                                        + "\nChange: "
+                                        + calculateChangeMoney(totalBill, receivedPayment, getPromotion()) + " Bath" +
+                                        "\n\nStaff Name : " + staffName
                                         + "\n\n--------------------Thank You---------------------";
 
-                                JOptionPane.showMessageDialog(null, billMessage, "Payment",
-                                        JOptionPane.INFORMATION_MESSAGE);
+                                billTextArea.setText(billMessage);
+                                dialog.setLocationRelativeTo(null);
+                                dialog.setResizable(true);
+                                dialog.setVisible(true);
                             } else {
                                 JOptionPane.showMessageDialog(null,
                                         "Received payment is insufficient to cover the total bill.", "Payment Error",
@@ -294,6 +314,29 @@ public class POSGUI extends JFrame {
                     JOptionPane.showMessageDialog(null,
                             "No items in the bill. Please add items before making a payment.", "Payment Error",
                             JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        });
+
+        JButton promotionButton = new JButton("Use Promotion");
+        promotionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String setPromotion = JOptionPane.showInputDialog("Enter Code to get Promotion:");
+                if (setPromotion != null) {
+                    try {
+                        if (setPromotion.equalsIgnoreCase("CanIGetGradeA")) {
+                            setPromotion(true);
+                            JOptionPane.showMessageDialog(null, "Promotion Correct, You get 10% discount");
+                        } else {
+                            setPromotion(false);
+                            JOptionPane.showMessageDialog(null, "Promotion Not Correct");
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null,
+                                "Promotion Not Correct");
+                    }
                 }
             }
         });
@@ -316,6 +359,7 @@ public class POSGUI extends JFrame {
         panel.add(removeItemButton);
         panel.add(clearBillButton);
         panel.add(payButton);
+        panel.add(promotionButton);
 
         JScrollPane scrollPane = new JScrollPane(billTextArea);
 
@@ -339,31 +383,28 @@ public class POSGUI extends JFrame {
         return totalBill;
     }
 
-    private double calculateChangeMoney(double totalBill, double receivedPayment) {
-        totalBill -= receivedPayment;
-        return totalBill;
+    private double calculateChangeMoney(double totalBill, double receivedPayment, boolean promotion) {
+        if (promotion) {
+            double discount = totalBill - calculatePromotion(totalBill);
+            return receivedPayment - discount;
+        } else {
+            return receivedPayment -= totalBill; 
+        }
     }
 
-    public void ShowNewClothes(String selectedFabric, String selectedSize, String selectedStyle, Clothes newItem) {
-        billTextArea.append("Clothes: " + count + "\n");
-        billTextArea.append("Style: " + selectedStyle + "\n");
-        billTextArea.append("Size: " + selectedSize + "\n");
-        billTextArea.append("Fabric: " + selectedFabric + "\n");
-        billTextArea.append("Price: " + newItem.getOverAllCharges() + " Bath\n\n");
-    }
-
-    public void ShowNewClothes(int selectedFabric, String selectedSize, String selectedStyle, Clothes newItem) {
-        billTextArea.append("Clothes: " + count + "\n");
-        billTextArea.append("Style: " + selectedStyle + "\n");
-        billTextArea.append("Size: " + selectedSize + "\n");
-        billTextArea.append("Fabric: " + selectedFabric + "\n");
-        billTextArea.append("Price: " + newItem.getOverAllCharges() + " Bath\n\n");
+    public double calculatePromotion(double Overall) {
+        if (getPromotion()) {
+            return (Overall * 10) / 100;
+        } else {
+            return 0;
+        }
     }
 
     public String ShowAllClothes(int index) {
         Clothes clothes = Stock.get(index);
-        return "Clothes: " + index + "\n" + "Style: " + clothes.getStyle() + "\n" + "Size: " +
-                clothes.getSize() + "\n" + "Fabric: " + clothes.getFabric() + "\n";
+        return "Clothes: " + index + "\n" + "Style: " + getStyleIntToString(clothes.getStyle()) + "\n" + "Size: " +
+                clothes.getSize() + "\n" + "Fabric: " + getFabricIntToString(clothes.getFabric()) + "\n" + "Price: "
+                + clothes.getOverAllCharges() + " Bath\n\n";
     }
 
     public String getFabricIntToString(int getFabric) {
@@ -553,4 +594,13 @@ public class POSGUI extends JFrame {
             return newStyle;
         }
     }
+
+    public void setPromotion(boolean Promotion) {
+        this.Promotion = Promotion;
+    }
+
+    public boolean getPromotion() {
+        return this.Promotion;
+    }
+
 }
