@@ -275,10 +275,6 @@ public class POSGUI extends JFrame {
                                     promotion = "Discount 10 %";
                                 }
 
-                                for (int i = 0; i < Stock.size(); i++) {
-                                    String itemInfo = ShowAllClothes(i) + "\n\n";
-                                    billMessage += itemInfo;
-                                }
                                 billMessage += "Total : " + totalBill + " Bath\n"
                                         + "Promotion: " + promotion
                                         + "\nDiscount: " + calculatePromotion(totalBill) +
