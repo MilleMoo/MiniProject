@@ -170,12 +170,10 @@ public class POSGUI extends JFrame {
                             if (selectedIndex >= 0 && selectedIndex < Stock.size()) {
                                 Clothes selectedItem = Stock.get(selectedIndex);
 
-                                // Display the selected item's details
                                 String selectedSize = selectedItem.getSize();
                                 String selectedFabric = getFabricIntToString(selectedItem.getFabric());
                                 String selectedStyle = getStyleIntToString(selectedItem.getStyle());
 
-                                // Allow the user to make modifications
                                 String newSizeInput = JOptionPane.showInputDialog("Enter new size:", selectedSize);
                                 if (newSizeInput != null) {
                                     String newSize = CheckWrongSize(newSizeInput);
@@ -203,7 +201,6 @@ public class POSGUI extends JFrame {
                                                     break;
                                             }
 
-                                            // Update the item with the new values
                                             selectedItem.setSize(newSize);
                                             setFabricStringToInt(newFabric, selectedItem);
                                             setStyleStringToInt(newStyle, selectedItem);
@@ -566,7 +563,9 @@ public class POSGUI extends JFrame {
             return newSize;
         } else {
             newSize = JOptionPane.showInputDialog("Wrong Size please input agin:");
-            CheckWrongSize(newSize);
+            if (newSize != null) {
+                CheckWrongSize(newSize);
+            }
             return newSize;
         }
     }
@@ -578,7 +577,9 @@ public class POSGUI extends JFrame {
             return newFabric;
         } else {
             newFabric = JOptionPane.showInputDialog("Wrong Fabic please input agin:");
-            CheckWrongFabic(newFabric);
+            if (newFabric != null) {
+                CheckWrongFabic(newFabric);
+            }
             return newFabric;
         }
     }
@@ -590,7 +591,9 @@ public class POSGUI extends JFrame {
             return newStyle;
         } else {
             newStyle = JOptionPane.showInputDialog("Wrong Style please input agin:");
-            CheckWrongStyle(newStyle);
+            if (newStyle != null) {
+                CheckWrongStyle(newStyle);
+            }
             return newStyle;
         }
     }
