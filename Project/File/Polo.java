@@ -1,90 +1,10 @@
 package Project.File;
 
-public class Polo implements Clothes{
-
-    private String Size;
-    private String Color;
-    private int Fabric;
-    private int Style;
-    private int FabricCharges;
-    private int SizeCharges;
-    private int OverAllCharges;
-
-    public Polo(int Style, String Size, String Color, int Fabric) {
-        setColor(Color);
-        setSize(Size);
-        setFabric(Fabric);
-        setStyle(Style);
+public class Polo extends Jacket{
+    public Polo(int Style, String Size, String Color, int Fabric) {// นี่คือ constructor ของคลาส Polo
+                                                                   // ที่ใช้สำหรับการสร้างอ็อบเจ็กต์ของคลาส Polo
+        super(Style, Size, Color, Fabric);// ใช้ super เพื่อเรียก constructor ของคลาส Jacket
+                                          // ที่มีการรับพารามิเตอร์เหล่านี้ โดยทำให้คลาส Polo
+                                          // สืบทอดคุณสมบัติและเมธอดจากคลาส
     }
-
-    @Override
-    public void setSize(String Size) {
-        this.Size = Size;
-    }
-
-    @Override
-    public void setColor(String Color) {
-        this.Color = Color;
-    }
-
-    @Override
-    public void setFabric(int fabric) {
-        this.Fabric = fabric;
-    }
-
-    @Override
-    public void setStyle(int Style) {
-        this.Style = Style;
-    }
-
-    @Override
-    public String getSize() {
-        return this.Size;
-    }
-
-    @Override
-    public String getColor() {
-        return this.Color;
-    }
-
-    @Override
-    public int getFabric() {
-        return this.Fabric;
-    }
-    
-    @Override
-    public int getStyle() {
-        return this.Style;
-    }
-
-    @Override
-    public void setFabricCharges(int FabricCharges) {
-        this.FabricCharges = FabricCharges;
-    }
-
-    @Override
-    public void setSizeCharges(int SizeCharges) {
-        this.SizeCharges = SizeCharges;
-    }
-
-    @Override
-    public int getFabricCharges() {
-        return this.FabricCharges;
-    }
-
-    @Override
-    public int getSizeCharges() {
-        return this.SizeCharges;
-    }
-
-    @Override
-    public void setOverAllCharges(int OverAllCharges) {
-        this.OverAllCharges = OverAllCharges;
-    }
-
-    @Override
-    public int getOverAllCharges() {
-        return OverAllCharges;
-    }
-    
 }
