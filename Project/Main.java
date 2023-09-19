@@ -1,17 +1,14 @@
 package Project;
 
 
-import javax.swing.SwingUtilities;
 
 import Project.File.*;
 
 class Main {
     public static void main(String[] args) {
-        
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new POSGUI();
+                new Login().setVisible(true);
             }
         });
     }
