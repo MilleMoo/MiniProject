@@ -1,4 +1,4 @@
-package Project.File;
+package File;
 
 import javax.swing.*;
 import java.awt.*;
