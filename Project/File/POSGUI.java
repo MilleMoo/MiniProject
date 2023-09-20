@@ -27,20 +27,23 @@ public class POSGUI extends JFrame {
     private ArrayList<Clothes> Stock = new ArrayList<>();
 
     public POSGUI(String Name) {// โค้ดใน constructor สำหรับกำหนดค่าเริ่มต้นและรับค่าNameมาจากclass login
-        setTitle("POS");//กำหนดชื่อหัวเรื่องของหน้าต่าง GUI เป็น "POS"
-        setSize(450, 500);//กำหนดขนาดของหน้าต่าง GUI เป็นความกว้าง 450 พิกเซลและความสูง 500 พิกเซล.
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//กำหนดการกระทำที่เกิดขึ้นเมื่อผู้ใช้ปิดหน้าต่าง GUI ให้แอปพลิเคชันจบการทำงาน 
+        setTitle("POS");// กำหนดชื่อหัวเรื่องของหน้าต่าง GUI เป็น "POS"
+        setSize(450, 500);// กำหนดขนาดของหน้าต่าง GUI เป็นความกว้าง 450 พิกเซลและความสูง 500 พิกเซล.
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// กำหนดการกระทำที่เกิดขึ้นเมื่อผู้ใช้ปิดหน้าต่าง GUI
+                                                       // ให้แอปพลิเคชันจบการทำงาน
 
-        receivePaymentTextField = new JTextField("0.0"); // กำหนดการกระทำที่เกิดขึ้นเมื่อผู้ใช้ปิดหน้าต่าง GUI ให้แอปพลิเคชันจบการทำงาน 
+        receivePaymentTextField = new JTextField("0.0"); // กำหนดการกระทำที่เกิดขึ้นเมื่อผู้ใช้ปิดหน้าต่าง GUI
+                                                         // ให้แอปพลิเคชันจบการทำงาน
 
-        nameTextField = new JLabel(Name);//สร้าง JLabel เพื่อแสดงชื่อของลูกค้าที่ถูกส่งมาผ่านพารามิเตอร์ Name
+        nameTextField = new JLabel(Name);// สร้าง JLabel เพื่อแสดงชื่อของลูกค้าที่ถูกส่งมาผ่านพารามิเตอร์ Name
         nameLabel = new JLabel("Customer Name:");
 
-        ColorTextField = new JTextField("Black");//สร้างช่องข้อมูลใน GUI สำหรับรับสีของสินค้าและกำหนดค่าเริ่มต้นให้เป็น "Black"
+        ColorTextField = new JTextField("Black");// สร้างช่องข้อมูลใน GUI สำหรับรับสีของสินค้าและกำหนดค่าเริ่มต้นให้เป็น
+                                                 // "Black"
         ColorLabel = new JLabel("Enter Color:");
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(9, 2));//กำหนดเค้าโครงของ JPanel เป็น GridLayout ที่มี 9 แถวและ 2 คอลัมน์ 
+        panel.setLayout(new GridLayout(9, 2));// กำหนดเค้าโครงของ JPanel เป็น GridLayout ที่มี 9 แถวและ 2 คอลัมน์
 
         JLabel styleLabel = new JLabel("Style:");
         String[] styles = { "TShirt", "Polo", "Jacket" };
@@ -50,13 +53,15 @@ public class POSGUI extends JFrame {
         JLabel sizeLabel = new JLabel("Size:");
         String[] sizes = { "S (32\" A / 23\" B) + 50Bath", "M (34\" A / 24\" B) + 100Bath",
                 "L (36\" A / 25\" B) + 150Bath", "XL (38\" A / 26\" B) + 200Bath" };
-        sizeComboBox = new JComboBox<>(sizes);//สร้าง JComboBox เพื่อให้ผู้ใช้เลือกรายละเอียดเกี่ยวกับสินค้าเช่น ขนาด
+        sizeComboBox = new JComboBox<>(sizes);// สร้าง JComboBox เพื่อให้ผู้ใช้เลือกรายละเอียดเกี่ยวกับสินค้าเช่น ขนาด
 
         JLabel fabricLabel = new JLabel("Fabric:");
         String[] fabrics = { "Cotton +300Bath", "Satin +350Bath", "Nylon +400Bath" };
-        fabricComboBox = new JComboBox<>(fabrics);//สร้าง JComboBox เพื่อให้ผู้ใช้เลือกรายละเอียดเกี่ยวกับสินค้าเช่น เนื้อผ้า
+        fabricComboBox = new JComboBox<>(fabrics);// สร้าง JComboBox เพื่อให้ผู้ใช้เลือกรายละเอียดเกี่ยวกับสินค้าเช่น
+                                                  // เนื้อผ้า
 
         addItemButton = new JButton("Add Clothes in Cart");// เมื่อคลิกจะเพิ่มสินค้าลงในตะกร้า
+        addItemButton.setBackground(Color.decode("#6C83AB"));
         addItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,152 +129,170 @@ public class POSGUI extends JFrame {
         });
 
         removeItemButton = new JButton("Remove Clothes in Cart by Index");
-        removeItemButton.setBackground(Color.decode("#ed4a6d"));//เมื่อคลิกจะลบสินค้าออกจากตะกร้าตามIndexที่ระบุ.
+        removeItemButton.setBackground(Color.decode("#F4A7AF"));// เมื่อคลิกจะลบสินค้าออกจากตะกร้าตามIndexที่ระบุ.
         removeItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Stock.size() != 0) {
-                    String selectedIndexStr = JOptionPane.showInputDialog("Enter the index of the item to remove:");
+                if (!Stock.isEmpty()) {
+                    if (Stock.size() != 0) {
+                        String selectedIndexStr = JOptionPane.showInputDialog("Enter the index of the item to remove:");
 
-                    if (selectedIndexStr != null) {
-                        try {
-                            int selectedIndex = Integer.parseInt(selectedIndexStr);
-                            if (selectedIndex >= 0 && selectedIndex < Stock.size()) {
-                                Clothes removedItem = Stock.remove(selectedIndex);
-                                int start = -1, end = -1;
-                                String billText = billTextArea.getText();
-                                for (int i = 0; i <= selectedIndex; i++) {
-                                    start = billText.indexOf("Clothes:", start - 1);
-                                    end = billText.indexOf("Bath", end - 1);
-                                    if (start == -1 || end == -1) {
-                                        break;
+                        if (selectedIndexStr != null) {
+                            try {
+                                int selectedIndex = Integer.parseInt(selectedIndexStr);
+                                if (selectedIndex >= 0 && selectedIndex < Stock.size()) {
+                                    Clothes removedItem = Stock.remove(selectedIndex);
+                                    int start = -1, end = -1;
+                                    String billText = billTextArea.getText();
+                                    for (int i = 0; i <= selectedIndex; i++) {
+                                        start = billText.indexOf("Clothes:", start - 1);
+                                        end = billText.indexOf("Bath", end - 1);
+                                        if (start == -1 || end == -1) {
+                                            break;
+                                        }
                                     }
-                                }
-                                if (start != -1 && end != -1) {
-                                    int nextStart = billText.indexOf("Clothes:", end - 1);
-                                    if (nextStart == -1) {
-                                        billTextArea.replaceRange("", start, billText.length());
-                                    } else {
-                                        billTextArea.replaceRange("", start, nextStart);
+                                    if (start != -1 && end != -1) {
+                                        int nextStart = billText.indexOf("Clothes:", end - 1);
+                                        if (nextStart == -1) {
+                                            billTextArea.replaceRange("", start, billText.length());
+                                        } else {
+                                            billTextArea.replaceRange("", start, nextStart);
+                                        }
                                     }
+                                    billTextArea.setText("");
+                                    for (int i = 0; i < Stock.size(); i++) {
+                                        billTextArea.append(ShowAllClothes(i));
+                                    }
+                                    JOptionPane.showMessageDialog(null, "Removed item:\n" + removedItem.toString());
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Invalid index. Please enter a valid index.");
                                 }
-                                billTextArea.setText("");
-                                for (int i = 0; i < Stock.size(); i++) {
-                                    billTextArea.append(ShowAllClothes(i));
-                                }
-                                JOptionPane.showMessageDialog(null, "Removed item:\n" + removedItem.toString());
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Invalid index. Please enter a valid index.");
+                            } catch (NumberFormatException ex) {
+                                JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
                             }
-                        } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
                         }
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Your Cart is Empty");
                 }
             }
         });
 
-        
-        JButton editItemButton = new JButton("Edit Clothes in Cart");//เมื่อคลิกจะแก้ไขข้อมูลของสินค้าในตะกร้าตามIndexที่ระบุ
+        JButton editItemButton = new JButton("Edit Clothes in Cart");// เมื่อคลิกจะแก้ไขข้อมูลของสินค้าในตะกร้าตามIndexที่ระบุ
+        editItemButton.setBackground(Color.decode("#6C83AB"));
         editItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Stock.size() != 0) {
-                    String selectedIndexText = JOptionPane.showInputDialog("Enter the index of the item to edit:");
-                    if (selectedIndexText != null) {
-                        try {
-                            Clothes clothes = null;
-                            int selectedIndex = Integer.parseInt(selectedIndexText);
-                            if (selectedIndex >= 0 && selectedIndex < Stock.size()) {
-                                Clothes selectedItem = Stock.get(selectedIndex);
+                if (!Stock.isEmpty()) {
+                    if (Stock.size() != 0) {
+                        String selectedIndexText = JOptionPane.showInputDialog("Enter the index of the item to edit:");
+                        if (selectedIndexText != null) {
+                            try {
+                                Clothes clothes = null;
+                                int selectedIndex = Integer.parseInt(selectedIndexText);
+                                if (selectedIndex >= 0 && selectedIndex < Stock.size()) {
+                                    Clothes selectedItem = Stock.get(selectedIndex);
 
-                                String selectedSize = selectedItem.getSize();
-                                String selectedFabric = getFabricIntToString(selectedItem.getFabric());
-                                String selectedStyle = getStyleIntToString(selectedItem.getStyle());
-                                String selectedColor = selectedItem.getColor();
+                                    String selectedSize = selectedItem.getSize();
+                                    String selectedFabric = getFabricIntToString(selectedItem.getFabric());
+                                    String selectedStyle = getStyleIntToString(selectedItem.getStyle());
+                                    String selectedColor = selectedItem.getColor();
 
-                                String newSizeInput = JOptionPane.showInputDialog("Enter new size:", selectedSize);
-                                if (newSizeInput != null) {
-                                    String newSize = CheckWrongSize(newSizeInput, selectedSize);
-                                    String newFabricInput = JOptionPane.showInputDialog("Enter new fabric:",
-                                            selectedFabric);
-                                    if (newFabricInput != null) {
-                                        String newFabric = CheckWrongFabric(newFabricInput, selectedFabric);
-                                        String newStyleInput = JOptionPane.showInputDialog("Enter new style:",
-                                                selectedStyle);
-                                        if (newStyleInput != null) {
-                                            String newStyle = CheckWrongStyle(newStyleInput, selectedStyle);
-                                            String newColor = JOptionPane.showInputDialog("Enter new Color:",
-                                                    selectedColor);
-                                            if (newColor != null) {
+                                    String newSizeInput = JOptionPane.showInputDialog("Enter new size:", selectedSize);
+                                    if (newSizeInput != null) {
+                                        String newSize = CheckWrongSize(newSizeInput, selectedSize);
+                                        String newFabricInput = JOptionPane.showInputDialog("Enter new fabric:",
+                                                selectedFabric);
+                                        if (newFabricInput != null) {
+                                            String newFabric = CheckWrongFabric(newFabricInput, selectedFabric);
+                                            String newStyleInput = JOptionPane.showInputDialog("Enter new style:",
+                                                    selectedStyle);
+                                            if (newStyleInput != null) {
+                                                String newStyle = CheckWrongStyle(newStyleInput, selectedStyle);
+                                                String newColor = JOptionPane.showInputDialog("Enter new Color:",
+                                                        selectedColor);
+                                                if (newColor != null) {
 
-                                                switch (newSize) {
-                                                    case "S", "s":
-                                                        newSize = "S (32\" A / 23\" B)";
-                                                        break;
-                                                    case "M", "m":
-                                                        newSize = "M (34\" A / 24\" B)";
-                                                        break;
-                                                    case "L", "l":
-                                                        newSize = "L (36\" A / 25\" B)";
-                                                        break;
-                                                    case "XL", "xl":
-                                                        newSize = "XL (38\" A / 26\" B)";
-                                                        break;
-                                                }
-                                                Stock.remove(selectedIndex);
-                                                if (newStyle.equals("TShirt")) {
-                                                    clothes = new TShirt(1, newSize, newColor,
-                                                            getFabricStringToInt(newFabric));
-                                                    Stock.add(clothes);
-                                                } else if (newStyle.equals("Polo")) {
-                                                    clothes = new Polo(2, newSize, newColor,
-                                                            getFabricStringToInt(newFabric));
-                                                    Stock.add(clothes);
-                                                } else if (newStyle.equals("Jacket")) {
-                                                    clothes = new Jacket(3, newSize, newColor,
-                                                            getFabricStringToInt(newFabric));
-                                                    Stock.add(clothes);
-                                                }
-                                                CheckBill(selectedIndex);
-                                                billTextArea.setText("");
-                                                for (int i = 0; i < Stock.size(); i++) {
-                                                    ShowAllClothes(i);
+                                                    switch (newSize) {
+                                                        case "S", "s":
+                                                            newSize = "S (32\" A / 23\" B)";
+                                                            break;
+                                                        case "M", "m":
+                                                            newSize = "M (34\" A / 24\" B)";
+                                                            break;
+                                                        case "L", "l":
+                                                            newSize = "L (36\" A / 25\" B)";
+                                                            break;
+                                                        case "XL", "xl":
+                                                            newSize = "XL (38\" A / 26\" B)";
+                                                            break;
+                                                    }
+                                                    if (selectedStyle == newStyle) {
+                                                        selectedItem.setColor(newColor);
+                                                        selectedItem.setFabric(getFabricStringToInt(newFabric));
+                                                        selectedItem.setSize(newSize);
+                                                        CheckBill(selectedIndex);
+
+                                                    } else if (selectedStyle != newStyle) {
+                                                        if (newStyle.equalsIgnoreCase("TShirt")) {
+                                                            clothes = new TShirt(1, newSize, newColor,
+                                                                    getFabricStringToInt(newFabric));
+                                                            Stock.add(selectedIndex, clothes);
+                                                        } else if (newStyle.equalsIgnoreCase("Polo")) {
+                                                            clothes = new Polo(2, newSize, newColor,
+                                                                    getFabricStringToInt(newFabric));
+                                                            Stock.add(selectedIndex, clothes);
+                                                        } else if (newStyle.equalsIgnoreCase("Jacket")) {
+                                                            clothes = new Jacket(3, newSize, newColor,
+                                                                    getFabricStringToInt(newFabric));
+                                                            Stock.add(selectedIndex, clothes);
+                                                        }
+                                                        Stock.remove(selectedIndex + 1);
+                                                        CheckBill(selectedIndex);
+                                                    }
+                                                    billTextArea.setText("");
+                                                    for (int i = 0; i < Stock.size(); i++) {
+                                                        billTextArea.append(ShowAllClothes(i));
+                                                    }
                                                 }
                                             }
                                         }
                                     }
+                                } else {
+                                    JOptionPane.showMessageDialog(null,
+                                            "Invalid index. Please enter a valid index.");
                                 }
-                            } else {
+                            } catch (NumberFormatException ex) {
                                 JOptionPane.showMessageDialog(null,
-                                        "Invalid index. Please enter a valid index.");
+                                        "Invalid input. Please enter Not have in cart.");
                             }
-                        } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(null,
-                                    "Invalid input. Please enter Not have in cart.");
-                        }
-                        billTextArea.setText("");
-                        for (int i = 0; i < Stock.size(); i++) {
-                            billTextArea.append(ShowAllClothes(i));
+
                         }
                     }
+                }else {
+                    JOptionPane.showMessageDialog(null, "Your Cart is Empty");
                 }
             }
         });
 
-        clearBillButton = new JButton("Clear Clothes in Cart");//เมื่อคลิกจะลบสินค้าทั้งหมดออกจากตะกร้า.
+        clearBillButton = new JButton("Clear Clothes in Cart");// เมื่อคลิกจะลบสินค้าทั้งหมดออกจากตะกร้า.
+        clearBillButton.setBackground(Color.decode("#F4A7AF"));
         clearBillButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Stock.clear();
-                billTextArea.setText("");
-                setPromotion(false);
+                if (!Stock.isEmpty()) {
+                    Stock.clear();
+                    billTextArea.setText("");
+                    setPromotion(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Your Cart is Empty");
+                }
             }
         });
 
         payButton = new JButton("Pay");
-        payButton.setBackground(Color.decode("#4aed78"));//เมื่อคลิกจะทำการชำระเงินและแสดงใบเสร็จ.
+        payButton.setBackground(Color.decode("#4aed78"));// เมื่อคลิกจะทำการชำระเงินและแสดงใบเสร็จ.
         payButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -345,32 +368,38 @@ public class POSGUI extends JFrame {
 
         });
 
-        JButton promotionButton = new JButton("Use Promotion");//เมื่อคลิกจะใช้โปรโมชั่นโดยให้ผู้ใช้ป้อนรหัสโปรโมชั่น.
+        JButton promotionButton = new JButton("Use Promotion");// เมื่อคลิกจะใช้โปรโมชั่นโดยให้ผู้ใช้ป้อนรหัสโปรโมชั่น.
+        promotionButton.setBackground(Color.decode("#00B9AF"));
         promotionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String setPromotion = JOptionPane.showInputDialog("Enter Code to get Promotion:");
-                if (setPromotion != null) {
-                    try {
-                        if (setPromotion.equalsIgnoreCase("CanIGetGradeA")) {
-                            setPromotion(true);
-                            JOptionPane.showMessageDialog(null, "Promotion Correct, You get 10% discount");
-                        } else {
-                            setPromotion(false);
-                            JOptionPane.showMessageDialog(null, "Promotion Not Correct");
+                if (!getPromotion()) {
+                    String setPromotion = JOptionPane.showInputDialog("Enter Code to get Promotion:");
+                    if (setPromotion != null) {
+                        try {
+                            if (setPromotion.equalsIgnoreCase("CanIGetGradeA")) {
+                                setPromotion(true);
+                                JOptionPane.showMessageDialog(null, "Promotion Correct, You get 10% discount");
+                            } else {
+                                setPromotion(false);
+                                JOptionPane.showMessageDialog(null, "Promotion Not Correct");
+                            }
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Promotion Not Correct");
                         }
-                    } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(null,
-                                "Promotion Not Correct");
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, "You get Promotion already");
                 }
             }
         });
 
         billTextArea = new JTextArea();
         billTextArea.setEditable(false);
+        panel.setBackground(Color.decode("#A3ABBD"));
 
-        panel.add(styleLabel);//แอดทุกปุ่มเข้าไปใน panel ทั้งหมด
+        panel.add(styleLabel);// แอดทุกปุ่มเข้าไปใน panel ทั้งหมด
         panel.add(styleComboBox);
         panel.add(sizeLabel);
         panel.add(sizeComboBox);
@@ -390,6 +419,7 @@ public class POSGUI extends JFrame {
         panel.add(promotionButton);
 
         JScrollPane scrollPane = new JScrollPane(billTextArea);
+        billTextArea.setBackground(Color.decode("#A3ABBD"));
 
         getContentPane().add(panel, BorderLayout.NORTH);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -476,7 +506,8 @@ public class POSGUI extends JFrame {
         return Style;
     }
 
-    public void setStyleStringToInt(String getStyle, Clothes Select) {// แปลงสตริงที่แทนสไตล์เสื้อผ้าเป็นค่าเลขจำนวนเต็มและกำหนดในอ็อบเจกต์ Clothes
+    public void setStyleStringToInt(String getStyle, Clothes Select) {// แปลงสตริงที่แทนสไตล์เสื้อผ้าเป็นค่าเลขจำนวนเต็มและกำหนดในอ็อบเจกต์
+                                                                      // Clothes
         int Style;
         switch (getStyle) {
             case "TShirt", "tshirt":
@@ -496,7 +527,8 @@ public class POSGUI extends JFrame {
         Select.setStyle(Style);
     }
 
-    public void setFabricStringToInt(String getFabric, Clothes Select) {// แปลงสตริงที่แทนเนื้อผ้าเป็นค่าเลขจำนวนเต็มและกำหนดในอ็อบเจกต์ Clothes
+    public void setFabricStringToInt(String getFabric, Clothes Select) {// แปลงสตริงที่แทนเนื้อผ้าเป็นค่าเลขจำนวนเต็มและกำหนดในอ็อบเจกต์
+                                                                        // Clothes
         int Fabric;
         switch (getFabric) {
             case "Cotton", "cotton", "Cotton +300Bath", "cotton +300Bath":
