@@ -141,29 +141,12 @@ public class POSGUI extends JFrame {
                             try {
                                 int selectedIndex = Integer.parseInt(selectedIndexStr);
                                 if (selectedIndex >= 0 && selectedIndex < Stock.size()) {
-                                    Clothes removedItem = Stock.remove(selectedIndex);
-                                    int start = -1, end = -1;
-                                    String billText = billTextArea.getText();
-                                    for (int i = 0; i <= selectedIndex; i++) {
-                                        start = billText.indexOf("Clothes:", start - 1);
-                                        end = billText.indexOf("Bath", end - 1);
-                                        if (start == -1 || end == -1) {
-                                            break;
-                                        }
-                                    }
-                                    if (start != -1 && end != -1) {
-                                        int nextStart = billText.indexOf("Clothes:", end - 1);
-                                        if (nextStart == -1) {
-                                            billTextArea.replaceRange("", start, billText.length());
-                                        } else {
-                                            billTextArea.replaceRange("", start, nextStart);
-                                        }
-                                    }
+                                    Stock.remove(selectedIndex);
                                     billTextArea.setText("");
                                     for (int i = 0; i < Stock.size(); i++) {
                                         billTextArea.append(ShowAllClothes(i));
                                     }
-                                    JOptionPane.showMessageDialog(null, "Removed item:\n" + removedItem.toString());
+                                    JOptionPane.showMessageDialog(null, "Removed Cloth: "+selectedIndex);
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Invalid index. Please enter a valid index.");
                                 }
