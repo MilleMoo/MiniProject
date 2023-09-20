@@ -1,4 +1,4 @@
-package Project.File;
+package File;
 
 public interface Clothes {
     public void setSize(String Size);// ใช้สำหรับการกำหนดขนาดของเสื้อ (Size) เมื่อผู้ใช้ต้องการแก้ไขขนาดของเสื้อ
