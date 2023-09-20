@@ -1,4 +1,4 @@
-package Project.File;
+package File;
 
 public class TShirt extends Jacket {
     public TShirt(int Style, String Size, String Color, int Fabric) {// นี่คือ constructor ของคลาส TShirt
