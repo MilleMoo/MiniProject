@@ -1,8 +1,5 @@
-package Project;
 
-
-
-import Project.File.*;
+import File.*;
 
 class Main {
     public static void main(String[] args) {
