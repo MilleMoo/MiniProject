@@ -1,4 +1,4 @@
-package Project.File;
+package File;
 
 public class Jacket implements Clothes{
     private String Size;
