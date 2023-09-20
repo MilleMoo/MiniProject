@@ -1,4 +1,4 @@
-package Project.File;
+package File;
 
 public class Polo extends Jacket{
     public Polo(int Style, String Size, String Color, int Fabric) {// นี่คือ constructor ของคลาส Polo
