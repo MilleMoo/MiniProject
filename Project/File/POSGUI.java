@@ -433,7 +433,7 @@ public class POSGUI extends JFrame {
 
     private double calculateChangeMoney(double totalBill, double receivedPayment, boolean promotion) {// เมธอดที่ใช้สำหรับคำนวณเงินทอนที่ต้องส่งให้กับลูกค้า
         if (promotion) {
-            return receivedPayment - (totalBill - (totalBill * 10) / 100);
+            return receivedPayment - (totalBill -calculatePromotion(totalBill)) ;
         } else {
             return receivedPayment -= totalBill;
         }
