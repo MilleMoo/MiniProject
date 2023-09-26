@@ -31,7 +31,7 @@ public class Login extends JFrame {
                 jPanel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
                 jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-                jLabel1.setText("User Name:");
+                jLabel1.setText("Staff Name:");
                 jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
                 jLabel2.setText("Password: ");
