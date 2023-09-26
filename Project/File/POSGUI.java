@@ -121,9 +121,11 @@ public class POSGUI extends JFrame {
                         for (int i = 0; i < Stock.size(); i++) {
                             billTextArea.append(ShowAllClothes(i));
                         }
+                        double totalBill = calculateTotalBill();
+                        billTextArea.append("Total : " + totalBill + " Bath\n");
                     }
                 } else if (setColor == null) {
-                    JOptionPane.showInputDialog("Please Input Black");
+                    JOptionPane.showInputDialog("Please Input Color");
                 }
             }
         });
@@ -146,7 +148,9 @@ public class POSGUI extends JFrame {
                                     for (int i = 0; i < Stock.size(); i++) {
                                         billTextArea.append(ShowAllClothes(i));
                                     }
-                                    JOptionPane.showMessageDialog(null, "Removed Cloth: "+selectedIndex);
+                                    double totalBill = calculateTotalBill();
+                                    billTextArea.append("Total : " + totalBill + " Bath\n");
+                                    JOptionPane.showMessageDialog(null, "Removed Cloth: " + selectedIndex);
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Invalid index. Please enter a valid index.");
                                 }
@@ -164,6 +168,7 @@ public class POSGUI extends JFrame {
         JButton editItemButton = new JButton("Edit Clothes in Cart");// เมื่อคลิกจะแก้ไขข้อมูลของสินค้าในตะกร้าตามIndexที่ระบุ
         editItemButton.setBackground(Color.decode("#6C83AB"));
         editItemButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!Stock.isEmpty()) {
@@ -252,7 +257,7 @@ public class POSGUI extends JFrame {
 
                         }
                     }
-                }else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Your Cart is Empty");
                 }
             }
