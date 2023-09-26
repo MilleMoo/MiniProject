@@ -36,7 +36,7 @@ public class POSGUI extends JFrame {
                                                          // ให้แอปพลิเคชันจบการทำงาน
 
         nameTextField = new JLabel(Name);// สร้าง JLabel เพื่อแสดงชื่อของลูกค้าที่ถูกส่งมาผ่านพารามิเตอร์ Name
-        nameLabel = new JLabel("Customer Name:");
+        nameLabel = new JLabel("Staff Name:");
 
         ColorTextField = new JTextField("Black");// สร้างช่องข้อมูลใน GUI สำหรับรับสีของสินค้าและกำหนดค่าเริ่มต้นให้เป็น
                                                  // "Black"
@@ -320,7 +320,7 @@ public class POSGUI extends JFrame {
                                         + "Cash: " + receivedPayment + " Bath"
                                         + "\nChange: "
                                         + calculateChangeMoney(totalBill, receivedPayment, getPromotion()) + " Bath" +
-                                        "\n\nCustomer Name : " + staffName + "\nTrack Number: "
+                                        "\n\nStaff Name : " + staffName + "\nTrack Number: "
                                         + ThreadLocalRandom.current().nextInt()
                                         + "\n\n--------------------Thank You---------------------";
 
@@ -380,7 +380,7 @@ public class POSGUI extends JFrame {
 
         billTextArea = new JTextArea();
         billTextArea.setEditable(false);
-        panel.setBackground(Color.decode("#A3ABBD"));
+        panel.setBackground(Color.decode("#D9E1E2"));
 
         panel.add(styleLabel);// แอดทุกปุ่มเข้าไปใน panel ทั้งหมด
         panel.add(styleComboBox);
@@ -402,7 +402,7 @@ public class POSGUI extends JFrame {
         panel.add(promotionButton);
 
         JScrollPane scrollPane = new JScrollPane(billTextArea);
-        billTextArea.setBackground(Color.decode("#A3ABBD"));
+        billTextArea.setBackground(Color.decode("#EBECE7"));
 
         getContentPane().add(panel, BorderLayout.NORTH);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
