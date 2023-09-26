@@ -242,6 +242,8 @@ public class POSGUI extends JFrame {
                                                     for (int i = 0; i < Stock.size(); i++) {
                                                         billTextArea.append(ShowAllClothes(i));
                                                     }
+                                                    double totalBill = calculateTotalBill();
+                                                    billTextArea.append("Total : " + totalBill + " Bath\n");
                                                 }
                                             }
                                         }
@@ -431,8 +433,7 @@ public class POSGUI extends JFrame {
 
     private double calculateChangeMoney(double totalBill, double receivedPayment, boolean promotion) {// เมธอดที่ใช้สำหรับคำนวณเงินทอนที่ต้องส่งให้กับลูกค้า
         if (promotion) {
-            double discount = totalBill - calculatePromotion(totalBill);
-            return receivedPayment - discount;
+            return receivedPayment - (totalBill - (totalBill * 10) / 100);
         } else {
             return receivedPayment -= totalBill;
         }
