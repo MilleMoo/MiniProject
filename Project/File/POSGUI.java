@@ -65,12 +65,12 @@ public class POSGUI extends JFrame {
         addItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String setColor = ColorTextField.getText();
-                if (setColor != null) {
-                    setColor = setColor.toUpperCase();
-                    String selectedStyle = (String) styleComboBox.getSelectedItem();
-                    String selectedSize = extractSize((String) sizeComboBox.getSelectedItem());
-                    String selectedFabric = (String) fabricComboBox.getSelectedItem();
+                String setColor = ColorTextField.getText();//รับค่าสีจากช่องJTextField
+                if (setColor != null) {//ค่าสีจากช่องJTextFielไม่เป็นค่าว่างก็จะทำงานต่อ แต่ถ้าไม่จะโชวข้อความเตือน
+                    setColor = setColor.toUpperCase();//ตั้งค่าตัวอักษรทุกตัวของสีให้เป็นตัวพิมใหญ่
+                    String selectedStyle = (String) styleComboBox.getSelectedItem();//เก็บค่ารูปแบบของเสื้อผ้า
+                    String selectedSize = extractSize((String) sizeComboBox.getSelectedItem());//เก็บค่าขนาด
+                    String selectedFabric = (String) fabricComboBox.getSelectedItem();//เก็บค่าชนิดของผ้า
 
                     Clothes newItem = null;
                     if (selectedStyle.equals("TShirt")) {
@@ -79,7 +79,7 @@ public class POSGUI extends JFrame {
                         newItem = new Polo(2, selectedSize, setColor, getFabricStringToInt(selectedFabric));
                     } else if (selectedStyle.equals("Jacket")) {
                         newItem = new Jacket(3, selectedSize, setColor, getFabricStringToInt(selectedFabric));
-                    }
+                    }//if else ทั้ง3ตัวมีไว้เพื่อเลือกว่าจะสร้างobjไว้ที่เสื้อผ้ารูปแบบใด
 
                     if (newItem != null) {
                         int sizeCharges = 0;
@@ -110,50 +110,50 @@ public class POSGUI extends JFrame {
                             case "Nylon +400Bath":
                                 fabricCharges += 400;
                                 break;
-                        }
+                        }//switch case ทั้งสองตัวมีหน้าที่เลือกราคาของขนาดผ้า และ ชนิดของผ้า
 
-                        newItem.setSizeCharges(sizeCharges);
-                        newItem.setFabricCharges(fabricCharges);
-                        newItem.setOverAllCharges(sizeCharges + fabricCharges);
+                        newItem.setSizeCharges(sizeCharges);//setราคาของสี
+                        newItem.setFabricCharges(fabricCharges);//setราคาของชนิดผ้า
+                        newItem.setOverAllCharges(sizeCharges + fabricCharges);//setราคาทั้งหมดในผ้าชิ้นนั้น
 
-                        Stock.add(newItem);
+                        Stock.add(newItem);//แอดค่าเข้าในarraylist
                         billTextArea.setText("");
                         for (int i = 0; i < Stock.size(); i++) {
                             billTextArea.append(ShowAllClothes(i));
                         }
                         double totalBill = calculateTotalBill();
                         billTextArea.append("Total : " + totalBill + " Bath\n");
-                    }
+                    }//reset ตัวอักษรในช่องสิ้นค่าแล้ว แสดงค่าใหม่
                 } else if (setColor == null) {
-                    JOptionPane.showInputDialog("Please Input Color");
+                    JOptionPane.showInputDialog("Please Input Color");//ข้อความแจ้งเตือนให้ใส่ค่าสี
                 }
             }
         });
 
         removeItemButton = new JButton("Remove Clothes in Cart by Index");
-        removeItemButton.setBackground(Color.decode("#F4A7AF"));// เมื่อคลิกจะลบสินค้าออกจากตะกร้าตามIndexที่ระบุ.
+        removeItemButton.setBackground(Color.decode("#F4A7AF"));// เมื่อคลิกจะลบสินค้าออกจากตะกร้าตามIndexที่ระบุ
         removeItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!Stock.isEmpty()) {
                     if (Stock.size() != 0) {
-                        String selectedIndexStr = JOptionPane.showInputDialog("Enter the index of the item to remove:");
+                        String selectedIndexStr = JOptionPane.showInputDialog("Enter the index of the item to remove:");//เก็บค่าเลือกสินค้าออกจากตะกร้าตามIndexที่ระบุ
 
                         if (selectedIndexStr != null) {
                             try {
                                 int selectedIndex = Integer.parseInt(selectedIndexStr);
                                 if (selectedIndex >= 0 && selectedIndex < Stock.size()) {
-                                    Stock.remove(selectedIndex);
+                                    Stock.remove(selectedIndex);//ลบค่าของเสื้อผ้าชิ้นนั้นออกจากarraylist
                                     billTextArea.setText("");
                                     for (int i = 0; i < Stock.size(); i++) {
                                         billTextArea.append(ShowAllClothes(i));
                                     }
                                     double totalBill = calculateTotalBill();
-                                    billTextArea.append("Total : " + totalBill + " Bath\n");
-                                    JOptionPane.showMessageDialog(null, "Removed Cloth: " + selectedIndex);
+                                    billTextArea.append("Total : " + totalBill + " Bath\n");//reset ตัวอักษรในช่องสิ้นค่าแล้ว แสดงค่าใหม่
+                                    JOptionPane.showMessageDialog(null, "Removed Cloth: " + selectedIndex);//แสดงเลขIndexที่ถูกลบทิ้งไปแล้ว
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Invalid index. Please enter a valid index.");
-                                }
+                                }//แสดงเตือนว่าใส่เลขIndexที่ไม่มีอยู่ในตะกร้า
                             } catch (NumberFormatException ex) {
                                 JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
                             }
@@ -161,7 +161,7 @@ public class POSGUI extends JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Your Cart is Empty");
-                }
+                }//แสดงเตือนว่าไม่มีสิ้นค้าอยู่ในตะกร้า
             }
         });
 
@@ -171,34 +171,33 @@ public class POSGUI extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!Stock.isEmpty()) {
-                    if (Stock.size() != 0) {
+                if (!Stock.isEmpty()) {//เช็คว่าarraylistตัวนี้ว่ามีสินค้าอยู่หรือไม่
                         String selectedIndexText = JOptionPane.showInputDialog("Enter the index of the item to edit:");
                         if (selectedIndexText != null) {
                             try {
                                 Clothes clothes = null;
-                                int selectedIndex = Integer.parseInt(selectedIndexText);
+                                int selectedIndex = Integer.parseInt(selectedIndexText);//เลือกเสื้อผ้าที่ต้องการแก้ไขตามindex
                                 if (selectedIndex >= 0 && selectedIndex < Stock.size()) {
                                     Clothes selectedItem = Stock.get(selectedIndex);
 
                                     String selectedSize = selectedItem.getSize();
                                     String selectedFabric = getFabricIntToString(selectedItem.getFabric());
                                     String selectedStyle = getStyleIntToString(selectedItem.getStyle());
-                                    String selectedColor = selectedItem.getColor();
+                                    String selectedColor = selectedItem.getColor();//รับค่าของส่วนประกอบในเสื้อผ้านั้นๆ
 
                                     String newSizeInput = JOptionPane.showInputDialog("Enter new size:", selectedSize);
                                     if (newSizeInput != null) {
-                                        String newSize = CheckWrongSize(newSizeInput, selectedSize);
+                                        String newSize = CheckWrongSize(newSizeInput, selectedSize);//รับค่าขนาดใหม่และเช็คว่าผิดหรือไม่
                                         String newFabricInput = JOptionPane.showInputDialog("Enter new fabric:",
                                                 selectedFabric);
                                         if (newFabricInput != null) {
-                                            String newFabric = CheckWrongFabric(newFabricInput, selectedFabric);
+                                            String newFabric = CheckWrongFabric(newFabricInput, selectedFabric);//รับค่าชนิดผ้าใหม่และเช็คว่าผิดหรือไม่
                                             String newStyleInput = JOptionPane.showInputDialog("Enter new style:",
                                                     selectedStyle);
                                             if (newStyleInput != null) {
-                                                String newStyle = CheckWrongStyle(newStyleInput, selectedStyle);
+                                                String newStyle = CheckWrongStyle(newStyleInput, selectedStyle);//รับค่ารูปแบบใหม่และเช็คว่าผิดหรือไม่
                                                 String newColor = JOptionPane.showInputDialog("Enter new Color:",
-                                                        selectedColor);
+                                                        selectedColor);//รับค่าสี
                                                 if (newColor != null) {
 
                                                     switch (newSize) {
@@ -214,14 +213,14 @@ public class POSGUI extends JFrame {
                                                         case "XL", "xl":
                                                             newSize = "XL (38\" A / 26\" B)";
                                                             break;
-                                                    }
-                                                    if (selectedStyle == newStyle) {
+                                                    }//แปลงจากsizeย่อ เป็นการบอกsizeและบอกขนาด
+                                                    if (selectedStyle == newStyle) {//ถ้ารูปแบบของเสื้อผ้าไม่ถูกเปลี่ยนก็จะsetค่าที่ได้รับมาใหม่
                                                         selectedItem.setColor(newColor);
                                                         selectedItem.setFabric(getFabricStringToInt(newFabric));
                                                         selectedItem.setSize(newSize);
                                                         CheckBill(selectedIndex);
 
-                                                    } else if (selectedStyle != newStyle) {
+                                                    } else if (selectedStyle != newStyle) {//ถ้ารูปแบบของเสื้อผ้าถูกเปลี่ยนก็จะสร้างobjใหม่ในตำแหน่งเดิม และลบobjเก่าทิ้ง
                                                         if (newStyle.equalsIgnoreCase("TShirt")) {
                                                             clothes = new TShirt(1, newSize, newColor,
                                                                     getFabricStringToInt(newFabric));
@@ -243,7 +242,7 @@ public class POSGUI extends JFrame {
                                                         billTextArea.append(ShowAllClothes(i));
                                                     }
                                                     double totalBill = calculateTotalBill();
-                                                    billTextArea.append("Total : " + totalBill + " Bath\n");
+                                                    billTextArea.append("Total : " + totalBill + " Bath\n");//reset ตัวอักษรในช่องสิ้นค่าแล้ว แสดงค่าใหม่
                                                 }
                                             }
                                         }
@@ -251,17 +250,15 @@ public class POSGUI extends JFrame {
                                 } else {
                                     JOptionPane.showMessageDialog(null,
                                             "Invalid index. Please enter a valid index.");
-                                }
+                                }//เตือนว่าใส่เลขindexที่ไม่มีอยู่ในตะกร้า
                             } catch (NumberFormatException ex) {
                                 JOptionPane.showMessageDialog(null,
                                         "Invalid input. Please enter Not have in cart.");
                             }
-
                         }
-                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Your Cart is Empty");
-                }
+                }//เตือนว่าไม่สินค้าอยู่ในตะกร้า
             }
         });
 
@@ -271,13 +268,13 @@ public class POSGUI extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!Stock.isEmpty()) {
-                    Stock.clear();
-                    billTextArea.setText("");
-                    setPromotion(false);
+                if (!Stock.isEmpty()) {//ถ้าตะกร้าไม่ว่างก็จะทำงานต่อ
+                    Stock.clear();//ล้างสินค้าถูกอย่างออกจากarraylist
+                    billTextArea.setText("");//ล้างตัวอักษรที่โชวอยู่
+                    setPromotion(false);//setpromotionให้เป็นค่าว่าง
                 } else {
                     JOptionPane.showMessageDialog(null, "Your Cart is Empty");
-                }
+                }//เตือนว่าไม่สินค้าอยู่ในตะกร้า
             }
         });
 
@@ -287,16 +284,16 @@ public class POSGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (Stock.size() != 0) {
-                    String staffName = nameTextField.getText();
-                    String receivedPaymentText = receivePaymentTextField.getText();
-                    LocalDateTime currentTime = LocalDateTime.now();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-                    String formattedTime = currentTime.format(formatter);
-                    if (!staffName.isEmpty() && !receivedPaymentText.isEmpty()) {
+                    String staffName = nameTextField.getText();//รับค่าชื่อพนักงาน
+                    String receivedPaymentText = receivePaymentTextField.getText();//รับค่าเงินที่่ลูกค่าจ่ายมา
+                    LocalDateTime currentTime = LocalDateTime.now();//เก็บค่าเวลาปัจจุบัน
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");//ตั้งค่าว่าจะให้โชวเวลาเป็นแบบไหน
+                    String formattedTime = currentTime.format(formatter);//ทำให้เป็นตัวอักษร
+                    if (!staffName.isEmpty() && !receivedPaymentText.isEmpty()) {//เช็คค่าชื่อพนักงานและ เงินที่ได้รับจากลูกค้าว่า มีค่่าอยู่รึปาว
                         try {
-                            double totalBill = calculateTotalBill();
+                            double totalBill = calculateTotalBill();//คำนวนเพื่อรวบร่วมราคาทั้งหมด
                             double receivedPayment = Double.parseDouble(receivedPaymentText);
-                            if (totalBill <= receivedPayment) {
+                            if (totalBill <= receivedPayment) {//เช็คว่าเงินที่ได้รับนั้นมีค่าน้อยกว่า เงินที่ลูกค้าต้องจ่าย
                                 JDialog dialog = new JDialog();
                                 dialog.setTitle("Bill");
                                 dialog.setModal(true);
@@ -334,26 +331,26 @@ public class POSGUI extends JFrame {
                                 billTextArea.setText(billMessage);
                                 dialog.setLocationRelativeTo(null);
                                 dialog.setResizable(true);
-                                dialog.setVisible(true);
+                                dialog.setVisible(true);//สร้างหน้าต่างใหม่ที่โชวบิลราคา
                             } else {
                                 JOptionPane.showMessageDialog(null,
                                         "Received payment is insufficient to cover the total bill.", "Payment Error",
                                         JOptionPane.ERROR_MESSAGE);
-                            }
+                            }//โชวว่าเงินที่ได้รับมานั้นมีน้อยกว่าราคาสินค้าที่ร่วมมา
                         } catch (NumberFormatException ENF) {
                             JOptionPane.showMessageDialog(null,
                                     "Invalid received payment value. Please enter a valid number.", "Payment Error",
                                     JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Please enter staff name and received payment.",
+                        JOptionPane.showMessageDialog(null, "Please enter received payment.",
                                 "Payment Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                    }//เตือนให้ใส่ค่าเงินที่ได้รับจากลูกค่า
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "No items in the bill. Please add items before making a payment.", "Payment Error",
                             JOptionPane.ERROR_MESSAGE);
-                }
+                }//เตือนว่าไม่สินค้าอยู่ในตะกร้า
             }
 
         });
@@ -363,14 +360,14 @@ public class POSGUI extends JFrame {
         promotionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!getPromotion()) {
-                    String setPromotion = JOptionPane.showInputDialog("Enter Code to get Promotion:");
+                if (!getPromotion()) {//เช็คว่าpromotionนั้นได้ถูกinputรึยัง
+                    String setPromotion = JOptionPane.showInputDialog("Enter Code to get Promotion:");//รับค่าpromotion
                     if (setPromotion != null) {
                         try {
-                            if (setPromotion.equalsIgnoreCase("CanIGetGradeA")) {
+                            if (setPromotion.equalsIgnoreCase("CanIGetGradeA")) {//เช็คว่าที่รับค่ามานั้นถูกต้อง
                                 setPromotion(true);
                                 JOptionPane.showMessageDialog(null, "Promotion Correct, You get 10% discount");
-                            } else {
+                            } else {//เช็คว่าที่รับค่ามานั้นไม่ถูกต้อง
                                 setPromotion(false);
                                 JOptionPane.showMessageDialog(null, "Promotion Not Correct");
                             }
@@ -381,7 +378,7 @@ public class POSGUI extends JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "You get Promotion already");
-                }
+                }//เตือนว่าได้ทำการใช้promotionอยู่
             }
         });
 
