@@ -327,7 +327,7 @@ public class POSGUI extends JFrame {
                                 JScrollPane scrollPane = new JScrollPane(billTextArea);
                                 dialog.add(scrollPane);
                                 String promotion = "Not have Promotion";
-                                String billMessage = "----------------------Bill------------------------------\n"
+                                String billMessage = "----------------------Bill-----------------------------\n"
                                         + "                        OnlyCloths              \n" +
                                         "              " + formattedTime +
 
@@ -345,9 +345,7 @@ public class POSGUI extends JFrame {
                                         + "Cash: " + receivedPayment + " Bath"
                                         + "\nChange: "
                                         + calculateChangeMoney(totalBill, receivedPayment, getPromotion()) + " Bath" +
-                                        "\n\nStaff Name : " + staffName + "\nTrack Number: "
-                                        + ThreadLocalRandom.current().nextInt()
-                                        + "\n\n--------------------Thank You---------------------";
+                                        "\n\nStaff Name : " + staffName +"\n\n-------------♥♥♥ Thank You ♥♥♥---------------";
 
                                 billTextArea.setText(billMessage);
                                 dialog.setLocationRelativeTo(null);
