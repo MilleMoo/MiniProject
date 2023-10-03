@@ -7,11 +7,14 @@ public class Login extends JFrame {
         private String Name;
         private String Password;
 
-        public Login() {// นี่คือ constructor ของคลาส Login ที่ใช้สำหรับการสร้างอ็อบเจ็กต์ของคลาส Login
-                initComponents();// เรียก initComponents() เพื่อกำหนดค่าและสร้างองค์ประกอบของ GUI.
+        // นี่คือ constructor ของคลาส Login ที่ใช้สำหรับการสร้างอ็อบเจ็กต์ของคลาส Login
+        public Login() {
+                // เรียก initComponents() เพื่อกำหนดค่าและสร้างองค์ประกอบของ GUI.
+                initComponents();
         }
 
-        private void initComponents() {// สร้างและกำหนดค่าองค์ประกอบ GUI เช่น ปุ่ม, ป้ายชื่อ, ช่องข้อมูล
+        // สร้างและกำหนดค่าองค์ประกอบ GUI เช่น ปุ่ม, ป้ายชื่อ, ช่องข้อมูลต่างๆ
+        private void initComponents() {
 
                 jPasswordField1 = new javax.swing.JPasswordField();
                 jPanel1 = new javax.swing.JPanel();
@@ -136,12 +139,12 @@ public class Login extends JFrame {
         public void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
         }
 
-        public void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// ตรวจสอบชื่อผู้ใช้และดำเนินการตามเงื่อนไขหรือไม่
-                                                                             // ถ้าข้อมูลไม่ตรงจะเด่งหน้าต่างว่าข้อมูลตรงไหนผิด
+        // ตรวจสอบชื่อผู้ใช้และดำเนินการตามเงื่อนไขหรือไม่ถ้าข้อมูลไม่ตรงจะเด่งหน้าต่างว่าข้อมูลตรงไหนผิด
+        public void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
                 Name = jTextField1.getText();
                 if (Name == null || Name.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "User Name is empty");
-                        return; // Return early to avoid further processing.
+                        return;
                 }
 
                 switch (Name) {
@@ -169,11 +172,18 @@ public class Login extends JFrame {
                 }
         }
 
-        private javax.swing.JButton jButton1;// ปุ่ม "Login" ใน GUI.
-        private javax.swing.JLabel jLabel1;// ป้ายชื่อ "User Name:" ใน GUI.
-        private javax.swing.JLabel jLabel2;// ป้ายชื่อ "Password:" ใน GUI.
-        private javax.swing.JPanel jPanel1;// พาแนลที่ใช้ใน GUI สำหรับรวมองค์ประกอบอื่น ๆ
-        private javax.swing.JPasswordField jPasswordField1;// ช่องรับข้อมูลรหัสผ่าน (ซึ่งไม่ได้ใช้ในโค้ด).
-        private javax.swing.JPasswordField jPasswordField2;// ช่องรับข้อมูลรหัสผ่านใน GUI.
-        private javax.swing.JTextField jTextField1;// ช่องรับข้อมูลชื่อผู้ใช้ใน GUI.
+        // ปุ่ม "Login" ใน GUI.
+        private javax.swing.JButton jButton1;
+        // ป้ายชื่อ "User Name:" ใน GUI.
+        private javax.swing.JLabel jLabel1;
+        // ป้ายชื่อ "Password:" ใน GUI.
+        private javax.swing.JLabel jLabel2;
+        // พาแนลที่ใช้ใน GUI สำหรับรวมองค์ประกอบอื่น ๆ
+        private javax.swing.JPanel jPanel1;
+        // ช่องรับข้อมูลรหัสผ่าน (ซึ่งไม่ได้ใช้ในโค้ด).
+        private javax.swing.JPasswordField jPasswordField1;
+        // ช่องรับข้อมูลรหัสผ่านใน GUI.
+        private javax.swing.JPasswordField jPasswordField2;
+        // ช่องรับข้อมูลชื่อผู้ใช้ใน GUI.
+        private javax.swing.JTextField jTextField1;
 }
